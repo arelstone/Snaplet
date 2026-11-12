@@ -35,7 +35,7 @@ Apps must already be open. Layouts save absolute window positions; adapting them
 
 Snaplet is under active development and uses supported Apple APIs.
 
-The app builds successfully, and all nine geometry and preset-persistence tests pass. The current bundle identifier needs a refreshed Device Control and Data Access entry before live window-control and hover interaction can be verified. Local builds use **Snaplet**. Its private key stays in your login Keychain. The ignored `.local/signing.json` stores only public certificate identification and the Keychain path; keep it across clean builds.
+The app builds successfully, and all nine geometry and preset-persistence tests pass. Accessibility access is enabled for the current bundle identifier, and both existing presets were verified after the data-folder migration. Live window-control and hover interaction still require verification. Local builds use **Snaplet**. Its private key stays in your login Keychain. The ignored `.local/signing.json` stores only public certificate identification and the Keychain path; keep it across clean builds.
 
 The app's signing requirement pins its bundle identifier and this specific certificate. Changing either requires approving window-control access once. Subsequent builds reuse both identifiers. A missing identity stops the build with an error.
 
@@ -57,4 +57,4 @@ Snaplet uses the `local.snaplet.app` bundle identifier and a local signing certi
 
 ## App icon
 
-The icon source is `Packaging/AppIcon.png`, and the macOS icon bundle is `Packaging/Snaplet.icns`. `scripts/build-app.sh` regenerates the icon bundle when needed and includes it before signing the app. To regenerate only the icon bundle, run `./scripts/build-icon.sh`. The generation prompts are recorded in `Packaging/AppIcon.prompt.md`.
+The icon source is `Packaging/AppIcon.png`, and the macOS icon bundle is `Packaging/Snaplet.icns`. `scripts/build-app.sh` regenerates the icon bundle when needed and includes it before signing the app. To regenerate only the icon bundle, run `./scripts/build-icon.sh`. The generation prompts are recorded in `Packaging/AppIcon.prompt.md`. The bundled icon was verified in About Snaplet and Device Control and Data Access. If System Settings keeps a generic placeholder after a rebuild, fully quit and reopen System Settings to refresh its view.
