@@ -37,7 +37,7 @@ Snaplet is under active development and uses supported Apple APIs.
 
 The app builds successfully, and all nine geometry and preset-persistence tests pass. Accessibility access was granted and the enabled state was verified in the app. Live window-control and hover interaction still require verification. Local builds use **Snaplet**. Its private key stays in your login Keychain. The ignored `.local/signing.json` stores only public certificate identification and the Keychain path; keep it across clean builds.
 
-The app's signing requirement pins its bundle identifier and this specific certificate. Switching identity requires approving window-control access once. Two different signed app versions were verified to have the same signing requirement and to satisfy each other’s requirement. Live verification passed: after approving this identity, the app was rebuilt with a changed build number and relaunched, and it still reported Accessibility access enabled. A missing identity stops the build with an error.
+The app's signing requirement pins its bundle identifier and this specific certificate. Switching identity requires approving window-control access once. Two different signed app versions were verified to have the same signing requirement and to satisfy each other’s requirement. Permission retention was verified with the Snaplet certificate: after replacing the Device Control and Data Access entry, an icon-bearing rebuild was relaunched and still reported Accessibility access enabled. A missing identity stops the build with an error.
 
 `SNAPLET_SIGNING_IDENTITY` is an explicit override. Setting it to `-` creates a temporary signature that can require renewed permission.
 
@@ -53,4 +53,8 @@ The local build scripts pin the app identity to this certificate and `local.snap
 
 ## Naming and existing data
 
-Snaplet retains the existing `local.snaplet.app` bundle identifier and **Snaplet** signing certificate so macOS can recognize the renamed app. Its preset data stays in `~/Library/Application Support/Snaplet/layouts.json`. The executable, app bundle, window titles, and menu bar label now use **Snaplet**.
+Snaplet uses the existing `local.snaplet.app` bundle identifier and a local signing certificate named **Snaplet**. When switching certificates, remove the previous Device Control and Data Access entry and add the newly signed app once; subsequent builds reuse the new certificate. Its preset data stays in `~/Library/Application Support/Snaplet/layouts.json`. The executable, app bundle, window titles, and menu bar label now use **Snaplet**.
+
+## App icon
+
+The icon source is `Packaging/AppIcon.png`, and the macOS icon bundle is `Packaging/Snaplet.icns`. `scripts/build-app.sh` regenerates the icon bundle when needed and includes it before signing the app. To regenerate only the icon bundle, run `./scripts/build-icon.sh`. The generation prompts are recorded in `Packaging/AppIcon.prompt.md`.
