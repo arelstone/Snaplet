@@ -35,9 +35,9 @@ Apps must already be open. Layouts save absolute window positions; adapting them
 
 Snaplet is under active development and uses supported Apple APIs.
 
-The app builds successfully, and all nine geometry and preset-persistence tests pass. Accessibility access was granted and the enabled state was verified in the app. Live window-control and hover interaction still require verification. Local builds use **Snaplet**. Its private key stays in your login Keychain. The ignored `.local/signing.json` stores only public certificate identification and the Keychain path; keep it across clean builds.
+The app builds successfully, and all nine geometry and preset-persistence tests pass. The current bundle identifier needs a refreshed Device Control and Data Access entry before live window-control and hover interaction can be verified. Local builds use **Snaplet**. Its private key stays in your login Keychain. The ignored `.local/signing.json` stores only public certificate identification and the Keychain path; keep it across clean builds.
 
-The app's signing requirement pins its bundle identifier and this specific certificate. Switching identity requires approving window-control access once. Two different signed app versions were verified to have the same signing requirement and to satisfy each other’s requirement. Permission retention was verified with the Snaplet certificate: after replacing the Device Control and Data Access entry, an icon-bearing rebuild was relaunched and still reported Accessibility access enabled. A missing identity stops the build with an error.
+The app's signing requirement pins its bundle identifier and this specific certificate. Changing either requires approving window-control access once. Subsequent builds reuse both identifiers. A missing identity stops the build with an error.
 
 `SNAPLET_SIGNING_IDENTITY` is an explicit override. Setting it to `-` creates a temporary signature that can require renewed permission.
 
@@ -51,9 +51,9 @@ The project identity is **Snaplet**, self-signed with no organization or Apple D
 
 The local build scripts pin the app identity to this certificate and `local.snaplet.app`. The certificate's public SHA-1 identifier is stored in `.local/signing.json`; that file is ignored by Git and is independent of `.build/`.
 
-## Naming and existing data
+## App identity and data
 
-Snaplet uses the existing `local.snaplet.app` bundle identifier and a local signing certificate named **Snaplet**. When switching certificates, remove the previous Device Control and Data Access entry and add the newly signed app once; subsequent builds reuse the new certificate. Its preset data stays in `~/Library/Application Support/Snaplet/layouts.json`. The executable, app bundle, window titles, and menu bar label now use **Snaplet**.
+Snaplet uses the `local.snaplet.app` bundle identifier and a local signing certificate named **Snaplet**. When changing the bundle identifier or signing certificate, remove the previous Device Control and Data Access entry and add the newly signed app once; subsequent builds reuse this identity. Its preset data is stored in `~/Library/Application Support/Snaplet/layouts.json`. The executable, app bundle, window titles, and menu bar label use **Snaplet**.
 
 ## App icon
 

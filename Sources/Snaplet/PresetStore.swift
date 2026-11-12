@@ -11,7 +11,6 @@ final class PresetStore {
     private let captureWindows: @MainActor () -> [SavedWindow]
 
     init(directory: URL? = nil, captureWindows: @escaping @MainActor () -> [SavedWindow] = { WindowController.capture() }) {
-        // Retain the original storage location so existing presets survive the app rename.
         let directory = directory ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Snaplet", isDirectory: true)
         self.captureWindows = captureWindows
