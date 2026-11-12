@@ -1,0 +1,7 @@
+.build/
+.swiftpm/
+.DS_Store
+.local/
+.omx/
+.omx-state-locks/
+.omx-state-locks.identity.json
